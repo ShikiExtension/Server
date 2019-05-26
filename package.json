@@ -1,0 +1,13 @@
+{
+  "name": "shikiextensinlocal",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "~4.16.1",
+    "promise-mysql": "^3.3.2"
+  }
+}
