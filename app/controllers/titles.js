@@ -11,7 +11,8 @@ class TitlesController {
             select v.*, a.title as author 
             from titles_videos as v 
             left join titles_videos_authors as a on a.id = v.author_id
-            where v.title_id = ? and v.episode = ?`;
+            left join titles as t on v.title_id = t.id
+            where t.shiki_id = ? and v.episode = ?`;
 
         db.query(query, [titleId, episode]).then(rows => {
             HandleResponse.getInstance(res).sendResponse(rows);
@@ -23,7 +24,11 @@ class TitlesController {
     static episodes (req, res) {
         const titleId = + req.params['id'];
 
-        const query = 'select distinct episode from titles_videos where title_id = ?';
+        const query = `
+            select distinct v.episode 
+            from titles_videos as v 
+            left join titles as t on v.title_id = t.id
+            where t.shiki_id = ?`;
 
         db.query(query, [titleId]).then(rows => {
             HandleResponse.getInstance(res).sendResponse({
