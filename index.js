@@ -4,6 +4,7 @@ const HttpException = require('./app/exceptions/HttpException');
 const StatisticsMiddleware = require('./app/middlewares/StatisticsMiddleware');
 const HandleResponse = require('./src/services/HandleResponse/HandleResponse');
 const TitlesRouter = require('./routes/titles');
+const allowOrigins = require('./config/app').cors.allowOrigins;
 
 const express = require('express');
 const app = express();
@@ -11,7 +12,13 @@ const app = express();
 app.use(StatisticsMiddleware.handle);
 
 app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', 'https://shikimori.one, https://shikimori.org');
+    const requestOrigin = req.get('Origin');
+    let responseOrigin = allowOrigins.slice(0).shift();
+
+    if (allowOrigins.includes(requestOrigin))
+        responseOrigin = allowOrigins[allowOrigins.indexOf(requestOrigin)];
+
+    res.set('Access-Control-Allow-Origin', responseOrigin);
     res.set('Access-Control-Allow-Credentials', 'false');
 
     next();

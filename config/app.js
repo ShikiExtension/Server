@@ -1,7 +1,8 @@
 module.exports = {
-    titles: {
-        videos: {
-            entriesPerPage: 100
-        }
+    cors: {
+        allowOrigins: [
+            'https://shikimori.one',
+            'https://shikimori.org'
+        ]
     }
 };
