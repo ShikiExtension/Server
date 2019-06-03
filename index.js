@@ -10,6 +10,13 @@ const app = express();
 
 app.use(StatisticsMiddleware.handle);
 
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', 'https://shikimori.one, https://shikimori.org');
+    res.set('Access-Control-Allow-Credentials', 'false');
+
+    next();
+});
+
 app.use('/', TitlesRouter);
 
 app.use((error, req, res, next) => {
